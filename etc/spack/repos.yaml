@@ -1,0 +1,12 @@
+# -------------------------------------------------------------------------
+# This is the plato spack repository configuration. It includes the
+# builtin spack package repository.
+#
+# Users can override these settings by editing the following file:
+#
+# Per-user settings (overrides default and site settings):
+#   ~/.spack/repos.yaml
+# -------------------------------------------------------------------------
+repos:
+  - $spack/var/spack/repos/plato
+  - $spack/var/spack/repos/builtin

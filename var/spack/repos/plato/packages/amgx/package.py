@@ -1,0 +1,57 @@
+##############################################################################
+# Copyright (c) 2013-2018, Lawrence Livermore National Security, LLC.
+# Produced at the Lawrence Livermore National Laboratory.
+#
+# This file is part of Spack.
+# Created by Todd Gamblin, tgamblin@llnl.gov, All rights reserved.
+# LLNL-CODE-647188
+#
+# For details, see https://github.com/spack/spack
+# Please also see the NOTICE and LICENSE files for our notice and the LGPL.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License (as
+# published by the Free Software Foundation) version 2.1, February 1999.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the IMPLIED WARRANTY OF
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the terms and
+# conditions of the GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+##############################################################################
+from spack import *
+
+
+class Amgx(CMakePackage):
+    """Amgx"""
+
+    homepage = "https://github.com/platoengine"
+    url      = "https://github.com/platoengine/amgx"
+    git      = "https://github.com/platoengine/amgx.git"
+
+    version('master', branch='master')
+
+    variant('build_type', default='Release',
+        description='The build type to build',
+        values=('Debug', 'Release', 'DebugRelease'))
+
+    variant('shared_libs',        default=True, description='Compile shared libraries')
+
+    variant('compute_capability', default='70', description='GPU compute capability',
+        values=('30', '35', '37', '50', '52', '60', '61', '70', '75'))
+
+    depends_on('nvccwrapper')
+
+    def cmake_args(self):
+        args = []
+
+        ccarch = self.spec['nvccwrapper'].compute_capability
+        args.extend([ '-DCUDA_ARCH:STRING=%s' % ccarch ])
+ 
+        if '+shared_libs' in self.spec: 
+            args.extend([ '-DBUILD_SHARED_LIBS:BOOL=ON' ])
+
+        return args
