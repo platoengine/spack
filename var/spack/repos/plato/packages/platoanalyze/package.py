@@ -44,6 +44,7 @@ class Platoanalyze(CMakePackage):
 
     depends_on('cmake@3.0.0:', type='build')
     depends_on('python@2.6:2.999',                          when='+python')
+    depends_on('platoengine+analyze_tests',                 when='+mpmd'  )
     depends_on('platoengine+geometry',                      when='+geometry')
     depends_on('platoengine~geometry',                      when='~geometry')
     depends_on('platoengine+cuda',                          when='+cuda+mpmd')
