@@ -114,7 +114,7 @@ class Platoengine(CMakePackage):
 
         if '+analyze_tests' in spec:
           options.extend([ '-DANALYZE=ON' ])
-          options.extend([ '-DANALYZE_BINARY=LGR_MPMD' ])
+          options.extend([ '-DANALYZE_BINARY=analyze_MPMD' ])
 
         return options
 
