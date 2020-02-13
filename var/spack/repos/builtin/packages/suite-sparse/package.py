@@ -13,7 +13,7 @@ class SuiteSparse(Package):
     homepage = 'http://faculty.cse.tamu.edu/davis/suitesparse.html'
     url = 'http://faculty.cse.tamu.edu/davis/SuiteSparse/SuiteSparse-5.2.0.tar.gz'
 
-    version('5.3.0', sha256='90e69713d8c454da5a95a839aea5d97d8d03d00cc1f667c4bdfca03f640f963d')
+    # version('5.3.0', sha256='90e69713d8c454da5a95a839aea5d97d8d03d00cc1f667c4bdfca03f640f963d')
     version('5.2.0', sha256='3c46c035ea8217649958a0f73360e825b0c9dcca4e32a9349d2c7678c0d48813')
     version('5.1.0', sha256='1b1371074224c6844697f3a55024d185b7ff6ffa49ac141d433fbb1aadf426f5')
     version('4.5.5', sha256='b9a98de0ddafe7659adffad8a58ca3911c1afa8b509355e7aa58b02feb35d9b6')
