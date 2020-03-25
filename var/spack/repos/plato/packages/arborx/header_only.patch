@@ -1,0 +1,73 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,17 +1,22 @@
+ cmake_minimum_required(VERSION 3.12)
+ project(ArborX CXX)
+ 
+-find_package(Kokkos 3.0 QUIET)
+-if(NOT Kokkos_FOUND)
+-  set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
+-  find_package(Kokkos 3.0 REQUIRED)
+-endif()
+-if(Kokkos_ENABLE_CUDA)
+-  kokkos_check(OPTIONS CUDA_LAMBDA)
++if(NOT ARBORX_ENABLE_HEADERONLY)
++  set(ARBORX_ENABLE_KOKKOS ON)
++  find_package(Kokkos 3.0 QUIET)
++  if(NOT Kokkos_FOUND)
++    set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
++    find_package(Kokkos 3.0 REQUIRED)
++  endif()
++  if(Kokkos_ENABLE_CUDA)
++    kokkos_check(OPTIONS CUDA_LAMBDA)
++  endif()
+ endif()
+ 
+ add_library(ArborX INTERFACE)
+-target_link_libraries(ArborX INTERFACE Kokkos::kokkos)
++if(ARBORX_ENABLE_KOKKOS)
++  target_link_libraries(ArborX INTERFACE Kokkos::kokkos)
++endif()
+ set_target_properties(ArborX PROPERTIES INTERFACE_COMPILE_FEATURES cxx_std_14)
+ 
+ option(ARBORX_ENABLE_MPI "Enable MPI support" OFF)
+@@ -75,11 +80,19 @@ configure_package_config_file(cmake/ArborXConfig.cmake.in
+   ${CMAKE_CURRENT_BINARY_DIR}/ArborXConfig.cmake
+   INSTALL_DESTINATION lib/cmake/ArborX
+ )
+-install(FILES
+-  ${CMAKE_CURRENT_BINARY_DIR}/ArborXConfig.cmake
+-  ${CMAKE_CURRENT_SOURCE_DIR}/cmake/FindKokkos.cmake
+-  ${CMAKE_CURRENT_BINARY_DIR}/ArborXSettings.cmake
+-  DESTINATION lib/cmake/ArborX )
++
++if(ARBORX_ENABLE_KOKKOS)
++  install(FILES
++    ${CMAKE_CURRENT_BINARY_DIR}/ArborXConfig.cmake
++    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/FindKokkos.cmake
++    ${CMAKE_CURRENT_BINARY_DIR}/ArborXSettings.cmake
++    DESTINATION lib/cmake/ArborX )
++else()
++  install(FILES
++    ${CMAKE_CURRENT_BINARY_DIR}/ArborXConfig.cmake
++    ${CMAKE_CURRENT_BINARY_DIR}/ArborXSettings.cmake
++    DESTINATION lib/cmake/ArborX )
++endif()
+ 
+ if(ARBORX_ENABLE_MPI)
+   install(DIRECTORY ${PROJECT_SOURCE_DIR}/src/ DESTINATION include
+--- a/cmake/ArborXConfig.cmake.in
++++ b/cmake/ArborXConfig.cmake.in
+@@ -2,8 +2,10 @@
+ 
+ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR} ${CMAKE_MODULE_PATH})
+ 
+-include(CMakeFindDependencyMacro)
+-find_dependency(Kokkos)
++if(ARBORX_ENABLE_KOKKOS)
++  include(CMakeFindDependencyMacro)
++  find_dependency(Kokkos)
++endif()
+ 
+ include("${CMAKE_CURRENT_LIST_DIR}/ArborXSettings.cmake")
+ if(ARBORX_ENABLE_MPI)

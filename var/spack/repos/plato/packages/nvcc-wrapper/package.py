@@ -52,4 +52,6 @@ class NvccWrapper(CMakePackage):
 
       self.spec.compute_capability = self.spec.variants['compute_capability'].value
 
+    def setup_environment(self, spack_env, run_env):
 
+      run_env.prepend_path('PATH', self.prefix.etc)
