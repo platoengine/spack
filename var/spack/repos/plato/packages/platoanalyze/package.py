@@ -40,6 +40,7 @@ class Platoanalyze(CMakePackage):
     variant( 'mpmd',       default=True,     description='Compile with mpmd'            )
     variant( 'python',     default=False,    description='Compile with python'          )
     variant( 'geometry',   default=False,    description='Compile with MLS geometry'    )
+    variant( 'meshmap',    default=True,     description='Compile with MeshMap'         )
     variant( 'rocket',     default=False,    description='Builds ROCKET and ROCKET_MPMD')
 
     depends_on('cmake@3.0.0:', type='build')
@@ -47,7 +48,7 @@ class Platoanalyze(CMakePackage):
     depends_on('platoengine+analyze_tests',                 when='+mpmd'  )
     depends_on('platoengine+geometry',                      when='+geometry')
     depends_on('platoengine~geometry',                      when='~geometry')
-    depends_on('arborx~mpi~cuda~serial @header_only',       when='+geometry')
+    depends_on('arborx~mpi~cuda~serial @header_only',       when='+meshmap')
     depends_on('platoengine+cuda',                          when='+cuda+mpmd')
     depends_on('platoengine~cuda',                          when='~cuda+mpmd')
     depends_on('amgx',                                      when='+cuda')
@@ -56,6 +57,7 @@ class Platoanalyze(CMakePackage):
     depends_on('omega-h+trilinos+exodus~cuda @9.26.5',      when='~cuda')
 
     conflicts('+geometry', when='~mpmd')
+    conflicts('+meshmap', when='~mpmd')
 
     def cmake_args(self):
         spec = self.spec
@@ -83,6 +85,9 @@ class Platoanalyze(CMakePackage):
 
         if '+geometry' in spec:
           options.extend([ '-DPLATOANALYZE_ENABLE_GEOMETRY=ON' ])
+
+        if '+meshmap' in spec:
+          options.extend([ '-DPLATOANALYZE_ENABLE_MESHMAP=ON' ])
 
         if '+cuda' in spec:
           amgx_dir = spec['amgx'].prefix
