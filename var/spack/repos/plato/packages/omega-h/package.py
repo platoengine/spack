@@ -52,7 +52,7 @@ class OmegaH(CMakePackage):
     depends_on('trilinos+cuda', when='+cuda')
     depends_on('trilinos~cuda', when='~cuda')
 
-    patch('side_numbering.patch')
+    patch('exodus.patch', when='@9.26.5')
 
     # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=86610
     conflicts('%gcc@8:8.2.99', when='@:9.22.1')
