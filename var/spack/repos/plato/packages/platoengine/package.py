@@ -31,6 +31,7 @@ class Platoengine(CMakePackage):
     variant( 'expy',           default=False,   description='Compile exodus/python API' )
     variant( 'geometry',       default=False,   description='Turn on Plato Geometry'    )
     variant( 'iso',            default=False,   description='Turn on iso extraction'    )
+    variant( 'esp',            default=False,   description='Turn on esp'               )
     variant( 'stk',            default=False,   description='Turn on use of stk'        )
     variant( 'rol',            default=False,   description='Turn on use of rol'        )
     variant( 'cuda',           default=False,   description='Compile with cuda'         )
@@ -60,6 +61,8 @@ class Platoengine(CMakePackage):
     depends_on( 'nvccwrapper',                                when='+cuda')
     depends_on( 'trilinos+cuda',                              when='+cuda')
     depends_on( 'trilinos~cuda',                              when='~cuda')
+
+    depends_on( 'esp', when='+esp')
 
 
     def cmake_args(self):
@@ -101,6 +104,13 @@ class Platoengine(CMakePackage):
 
         if '+stk' in spec:
           options.extend([ '-DSTK_ENABLED=ON' ])
+
+        if '+esp' in spec:
+          options.extend([ '-DESP_ENABLED=ON' ])
+          esp_lib_dir = spec['esp'].prefix+'/lib'
+          esp_inc_dir = spec['esp'].prefix+'/include'
+          options.extend([ '-DESP_LIB_DIR:PATH={0}'.format(esp_lib_dir) ])
+          options.extend([ '-DESP_INC_DIR:PATH={0}'.format(esp_inc_dir) ])
 
         if '+rol' in spec:
           options.extend([ '-DENABLE_ROL=ON' ])

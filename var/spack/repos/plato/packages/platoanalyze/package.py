@@ -42,6 +42,7 @@ class Platoanalyze(CMakePackage):
     variant( 'geometry',   default=False,    description='Compile with MLS geometry'    )
     variant( 'meshmap',    default=True,     description='Compile with MeshMap'         )
     variant( 'rocket',     default=False,    description='Builds ROCKET and ROCKET_MPMD')
+    variant( 'esp',        default=False,    description='Compile with ESP'             )
 
     depends_on('cmake@3.0.0:', type='build')
     depends_on('python@2.6:2.999',                          when='+python')
@@ -49,12 +50,15 @@ class Platoanalyze(CMakePackage):
     depends_on('platoengine+geometry',                      when='+geometry')
     depends_on('platoengine~geometry',                      when='~geometry')
     depends_on('arborx~mpi~cuda~serial @header_only',       when='+meshmap')
+    depends_on('platoengine+cuda+esp',                      when='+cuda+mpmd+esp')
+    depends_on('platoengine~cuda+esp',                      when='~cuda+mpmd+esp')
     depends_on('platoengine+cuda',                          when='+cuda+mpmd')
     depends_on('platoengine~cuda',                          when='~cuda+mpmd')
     depends_on('amgx',                                      when='+cuda')
     depends_on('nvccwrapper',                               when='+cuda')
-    depends_on('omega-h+trilinos+exodus+cuda @9.26.5',      when='+cuda')
-    depends_on('omega-h+trilinos+exodus~cuda @9.26.5',      when='~cuda')
+    depends_on('omega-h+trilinos+exodus+cuda @9.26.5',      when='+cuda', type=('build', 'link', 'run'))
+    depends_on('omega-h+trilinos+exodus~cuda @9.26.5',      when='~cuda', type=('build', 'link', 'run'))
+    depends_on('esp',                                       when='+esp')
 
     conflicts('+geometry', when='~mpmd')
     conflicts('+meshmap', when='~mpmd')
@@ -88,6 +92,13 @@ class Platoanalyze(CMakePackage):
 
         if '+meshmap' in spec:
           options.extend([ '-DPLATOANALYZE_ENABLE_MESHMAP=ON' ])
+
+        if '+esp' in spec:
+          options.extend([ '-DPLATOANALYZE_ENABLE_ESP=ON' ])
+          esp_lib_dir = spec['esp'].prefix+'/lib'
+          esp_inc_dir = spec['esp'].prefix+'/include'
+          options.extend([ '-DESP_LIB_DIR:PATH={0}'.format(esp_lib_dir) ])
+          options.extend([ '-DESP_INC_DIR:PATH={0}'.format(esp_inc_dir) ])
 
         if '+cuda' in spec:
           amgx_dir = spec['amgx'].prefix
