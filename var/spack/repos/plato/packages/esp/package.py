@@ -1,4 +1,4 @@
-import distutils
+from distutils.dir_util import copy_tree
 from spack import *
 
 class Esp(Package):
@@ -14,17 +14,17 @@ class Esp(Package):
 
     def install(self, spec, prefix):
 
-      distutils.dir_util.copy_tree('EngSketchPad/lib', prefix.lib)
+      copy_tree('EngSketchPad/lib', prefix.lib)
 
-      distutils.dir_util.copy_tree('OpenCASCADE-7.3.1/lib', prefix.lib)
+      copy_tree('OpenCASCADE-7.3.1/lib', prefix.lib)
 
-      distutils.dir_util.copy_tree('EngSketchPad/include', prefix.include)
+      copy_tree('EngSketchPad/include', prefix.include)
 
-      distutils.dir_util.copy_tree('EngSketchPad/bin', prefix.bin)
+      copy_tree('EngSketchPad/bin', prefix.bin)
 
-      distutils.dir_util.copy_tree('EngSketchPad/src', prefix.src)
+      copy_tree('EngSketchPad/src', prefix.src)
 
-      distutils.dir_util.copy_tree('EngSketchPad/ESP', prefix.ESP)
+      copy_tree('EngSketchPad/ESP', prefix.ESP)
 
 
     def setup_environment(self, spack_env, run_env):
