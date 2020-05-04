@@ -38,22 +38,23 @@ class Platoanalyze(CMakePackage):
 
     variant( 'cuda',       default=True,     description='Compile with cuda'            )
     variant( 'mpmd',       default=True,     description='Compile with mpmd'            )
+    variant( 'meshmap',    default=True,     description='Compile with MeshMap'         )
     variant( 'python',     default=False,    description='Compile with python'          )
     variant( 'geometry',   default=False,    description='Compile with MLS geometry'    )
-    variant( 'meshmap',    default=True,     description='Compile with MeshMap'         )
     variant( 'rocket',     default=False,    description='Builds ROCKET and ROCKET_MPMD')
     variant( 'esp',        default=False,    description='Compile with ESP'             )
+    variant( 'tpetra',     default=False,    description='Compile with Tpetra'          )
 
+    depends_on('trilinos+epetra')
+    depends_on('trilinos+cuda',                             when='+cuda')
+    depends_on('trilinos+tpetra+belos+ifpack2+amesos2+superlu',           when='+tpetra')
     depends_on('cmake@3.0.0:', type='build')
     depends_on('python@2.6:2.999',                          when='+python')
     depends_on('platoengine+analyze_tests',                 when='+mpmd'  )
     depends_on('platoengine+geometry',                      when='+geometry')
     depends_on('platoengine~geometry',                      when='~geometry')
     depends_on('arborx~mpi~cuda~serial @header_only',       when='+meshmap')
-    depends_on('platoengine+cuda+esp',                      when='+cuda+mpmd+esp')
-    depends_on('platoengine~cuda+esp',                      when='~cuda+mpmd+esp')
-    depends_on('platoengine+cuda',                          when='+cuda+mpmd')
-    depends_on('platoengine~cuda',                          when='~cuda+mpmd')
+    depends_on('platoengine+esp',                           when='+mpmd+esp')
     depends_on('amgx',                                      when='+cuda')
     depends_on('nvccwrapper',                               when='+cuda')
     depends_on('omega-h+trilinos+exodus+cuda @9.26.5',      when='+cuda', type=('build', 'link', 'run'))
@@ -92,6 +93,11 @@ class Platoanalyze(CMakePackage):
 
         if '+meshmap' in spec:
           options.extend([ '-DPLATOANALYZE_ENABLE_MESHMAP=ON' ])
+
+        if '+tpetra' in spec:
+          options.extend([ '-DPLATOANALYZE_ENABLE_TPETRA=ON' ])
+          superlu_dir = spec['superlu'].prefix
+          options.extend([ '-DSuperLU_PREFIX:PATH={0}'.format(superlu_dir) ])
 
         if '+esp' in spec:
           options.extend([ '-DPLATOANALYZE_ENABLE_ESP=ON' ])

@@ -41,26 +41,20 @@ class Platoengine(CMakePackage):
     conflicts( '+expy', when='-platomain')
     conflicts( '+iso',  when='-stk')
 
+    depends_on( 'trilinos')
     depends_on( 'mpi',            type=('build','link','run'))
     depends_on( 'cmake@3.0.0:',   type='build')
-    depends_on( 'trilinos+exodus+chaco~amesos~amesos2~hypre \
-                ~ifpack~ifpack2+intrepid~metis~muelu~mumps+shards \
-                ~suite-sparse~tpetra~zoltan~zoltan2')
-    depends_on( 'trilinos+rol',                          when='+rol')
-    depends_on( 'trilinos~rol',                          when='~rol')
+    depends_on( 'trilinos+rol',                               when='+rol')
     depends_on( 'trilinos+zlib+pnetcdf+boost \
                                        +stk+gtest',           when='+stk')
     depends_on( 'trilinos+zlib+pnetcdf+boost+intrepid2 \
                              +minitensor+pamgen',             when='+geometry')
-    depends_on( 'trilinos~intrepid2~minitensor~pamgen',       when='~geometry')
-    depends_on( 'trilinos~zlib~pnetcdf',                      when='~geometry~stk')
     depends_on( 'googletest',                                 when='+unit_testing' )
     depends_on( 'python@2.6:2.999',                           when='+expy'         )
     depends_on( 'nlopt',                                      when='+expy'         )
     depends_on( 'py-numpy@1.16.5',                            when='+expy'         )
     depends_on( 'nvccwrapper',                                when='+cuda')
     depends_on( 'trilinos+cuda',                              when='+cuda')
-    depends_on( 'trilinos~cuda',                              when='~cuda')
 
     depends_on( 'esp', when='+esp')
 

@@ -62,7 +62,7 @@ class Trilinos(CMakePackage):
     # Build options
     variant('complex', default=False,
             description='Enable complex numbers in Trilinos')
-    variant('cuda',         default=False,
+    variant('cuda',         default=True,
             description='Enable Cuda')
     variant('explicit_template_instantiation',  default=True,
             description='Enable explicit template instantiation (ETI)')
@@ -80,7 +80,7 @@ class Trilinos(CMakePackage):
             description='Compile using the default xSDK configuration')
 
     # TPLs (alphabet order)
-    variant('boost',        default=True,
+    variant('boost',        default=False,
             description='Compile with Boost')
     variant('cgns',         default=False,
             description='Enable CGNS')
@@ -88,17 +88,17 @@ class Trilinos(CMakePackage):
             description='Enable ADIOS2')
     variant('gtest',        default=True,
             description='Compile with Gtest')
-    variant('hdf5',         default=True,
+    variant('hdf5',         default=False,
             description='Compile with HDF5')
-    variant('hypre',        default=True,
+    variant('hypre',        default=False,
             description='Compile with Hypre preconditioner')
-    variant('metis',        default=True,
+    variant('metis',        default=False,
             description='Compile with METIS and ParMETIS')
-    variant('mumps',        default=True,
+    variant('mumps',        default=False,
             description='Compile with support for MUMPS solvers')
     variant('pnetcdf',      default=False,
             description='Compile with parallel-netcdf')
-    variant('suite-sparse', default=True,
+    variant('suite-sparse', default=False,
             description='Compile with SuiteSparse solvers')
     variant('superlu-dist', default=False,
             description='Compile with SuperluDist solvers')
@@ -112,20 +112,20 @@ class Trilinos(CMakePackage):
     # Package options (alphabet order)
     variant('alloptpkgs',   default=False,
             description='Compile with all optional packages')
-    variant('amesos',       default=True,
+    variant('amesos',       default=False,
             description='Compile with Amesos')
-    variant('amesos2',      default=True,
+    variant('amesos2',      default=False,
             description='Compile with Amesos2')
     variant('anasazi',      default=True,
             description='Compile with Anasazi')
     variant('aztec',        default=True,
             description='Compile with Aztec')
-    variant('belos',        default=True,
+    variant('belos',        default=False,
             description='Compile with Belos')
     # chaco is disabled by default. As of 12.14.1 libchaco.so
     # has the global symbol divide (and maybe others) that can
     # lead to symbol clash.
-    variant('chaco',       default=False,
+    variant('chaco',       default=True,
             description='Compile with Chaco from SEACAS')
     variant('epetra',       default=True,
             description='Compile with Epetra')
@@ -133,11 +133,11 @@ class Trilinos(CMakePackage):
             description='Compile with EpetraExt')
     variant('exodus',       default=True,
             description='Compile with Exodus from SEACAS')
-    variant('ifpack',       default=True,
+    variant('ifpack',       default=False,
             description='Compile with Ifpack')
-    variant('ifpack2',      default=True,
+    variant('ifpack2',      default=False,
             description='Compile with Ifpack2')
-    variant('intrepid',     default=False,
+    variant('intrepid',     default=True,
             description='Enable Intrepid')
     variant('intrepid2',    default=False,
             description='Enable Intrepid2')
@@ -151,7 +151,7 @@ class Trilinos(CMakePackage):
             description='Compile with ML')
     variant('minitensor',   default=False,
             description='Compile with MiniTensor')
-    variant('muelu',        default=True,
+    variant('muelu',        default=False,
             description='Compile with Muelu')
     variant('nox',          default=False,
             description='Compile with NOX')
@@ -169,7 +169,7 @@ class Trilinos(CMakePackage):
             description='Compile with Sacado')
     variant('stk',          default=False,
             description='Compile with STK')
-    variant('shards',       default=False,
+    variant('shards',       default=True,
             description='Compile with Shards')
     variant('shylu',        default=False,
             description='Compile with ShyLU')
@@ -179,11 +179,11 @@ class Trilinos(CMakePackage):
             description='Compile with Tempus')
     variant('teuchos',      default=True,
             description='Compile with Teuchos')
-    variant('tpetra',       default=True,
+    variant('tpetra',       default=False,
             description='Compile with Tpetra')
-    variant('zoltan',       default=True,
+    variant('zoltan',       default=False,
             description='Compile with Zoltan')
-    variant('zoltan2',      default=True,
+    variant('zoltan2',      default=False,
             description='Compile with Zoltan2')
 
     # External package options
@@ -718,7 +718,7 @@ class Trilinos(CMakePackage):
                 '-DKokkos_ENABLE_OpenMP:BOOL=OFF',
                 '-DKokkos_ENABLE_Pthread:BOOL=OFF',
                 '-DKokkos_ENABLE_Cuda_Lambda:BOOL=ON',
-                '-DKokkos_ENABLE_Cuda_UVM:BOOL=OFF',
+                '-DKokkos_ENABLE_Cuda_UVM:BOOL=ON',
                 '-DTPL_ENABLE_CUDA:BOOL=ON'
             ])
             cxx_flags.extend([
