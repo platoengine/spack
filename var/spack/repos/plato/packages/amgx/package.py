@@ -28,20 +28,13 @@ from spack import *
 class Amgx(CMakePackage):
     """Amgx"""
 
-    homepage = "https://github.com/platoengine"
-    url      = "https://github.com/platoengine/amgx"
-    git      = "https://github.com/platoengine/amgx.git"
+    homepage = "https://github.com/nvidia"
+    url      = "https://github.com/nvidia/amgx"
+    git      = "https://github.com/nvidia/amgx.git"
 
     version('master', branch='master')
 
-    variant('build_type', default='Release',
-        description='The build type to build',
-        values=('Debug', 'Release', 'DebugRelease'))
-
     variant('shared_libs',        default=True, description='Compile shared libraries')
-
-    variant('compute_capability', default='70', description='GPU compute capability',
-        values=('30', '35', '37', '50', '52', '60', '61', '70', '75'))
 
     depends_on('nvccwrapper')
 
