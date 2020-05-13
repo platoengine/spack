@@ -718,12 +718,20 @@ class Trilinos(CMakePackage):
                 '-DKokkos_ENABLE_OpenMP:BOOL=OFF',
                 '-DKokkos_ENABLE_Pthread:BOOL=OFF',
                 '-DKokkos_ENABLE_Cuda_Lambda:BOOL=ON',
-                '-DKokkos_ENABLE_Cuda_UVM:BOOL=ON',
                 '-DTPL_ENABLE_CUDA:BOOL=ON'
             ])
             cxx_flags.extend([
                 '-expt-extended-lambda'
             ])
+            if '+tpetra' in spec:
+              options.extend([
+                '-DKokkos_ENABLE_Cuda_UVM=ON'
+                ])
+            else:
+              options.extend([
+                '-DKokkos_ENABLE_Cuda_UVM=OFF'
+                ])
+
 
         # c++11
         if (self.compiler.name == 'gcc' and self.compiler.version < Version('6.1.0')):
