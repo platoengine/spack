@@ -39,6 +39,7 @@ class Platoanalyze(CMakePackage):
     variant( 'cuda',       default=True,     description='Compile with cuda'            )
     variant( 'mpmd',       default=True,     description='Compile with mpmd'            )
     variant( 'meshmap',    default=True,     description='Compile with MeshMap'         )
+    variant( 'amgx',       default=True,     description='Compile with AMGX'            )
     variant( 'python',     default=False,    description='Compile with python'          )
     variant( 'geometry',   default=False,    description='Compile with MLS geometry'    )
     variant( 'rocket',     default=False,    description='Builds ROCKET and ROCKET_MPMD')
@@ -55,14 +56,15 @@ class Platoanalyze(CMakePackage):
     depends_on('platoengine~geometry',                      when='~geometry')
     depends_on('arborx~mpi~cuda~serial @header_only',       when='+meshmap')
     depends_on('platoengine+esp',                           when='+mpmd+esp')
-    depends_on('amgx',                                      when='+cuda')
+    depends_on('amgx',                                      when='+amgx')
     depends_on('nvccwrapper',                               when='+cuda')
     depends_on('omega-h+trilinos+exodus+cuda @9.26.5',      when='+cuda', type=('build', 'link', 'run'))
     depends_on('omega-h+trilinos+exodus~cuda @9.26.5',      when='~cuda', type=('build', 'link', 'run'))
     depends_on('esp',                                       when='+esp')
 
     conflicts('+geometry', when='~mpmd')
-    conflicts('+meshmap', when='~mpmd')
+    conflicts('+meshmap',  when='~mpmd')
+    conflicts('+amgx',     when='~cuda')
 
     def cmake_args(self):
         spec = self.spec
@@ -106,7 +108,7 @@ class Platoanalyze(CMakePackage):
           options.extend([ '-DESP_LIB_DIR:PATH={0}'.format(esp_lib_dir) ])
           options.extend([ '-DESP_INC_DIR:PATH={0}'.format(esp_inc_dir) ])
 
-        if '+cuda' in spec:
+        if '+amgx' in spec:
           amgx_dir = spec['amgx'].prefix
           options.extend([ '-DAMGX_PREFIX:PATH={0}'.format(amgx_dir) ])
 
