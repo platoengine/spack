@@ -45,7 +45,6 @@ class Platoanalyze(CMakePackage):
     variant( 'rocket',     default=False,    description='Builds ROCKET and ROCKET_MPMD')
     variant( 'esp',        default=False,    description='Compile with ESP'             )
     variant( 'tpetra',     default=False,    description='Compile with Tpetra'          )
-    variant( 'longlong',   default=False,    description='Use long long ordinal type'   )
 
     depends_on('trilinos+epetra')
     depends_on('trilinos+cuda',                             when='+cuda')
@@ -66,7 +65,6 @@ class Platoanalyze(CMakePackage):
     conflicts('+geometry', when='~mpmd')
     conflicts('+meshmap',  when='~mpmd')
     conflicts('+amgx',     when='~cuda')
-    conflicts('+amgx',     when='+longlong')
 
     def cmake_args(self):
         spec = self.spec
@@ -116,9 +114,6 @@ class Platoanalyze(CMakePackage):
 
         if '+rocket' in spec:
           options.extend([ '-DPLATOANALYZE_ENABLE_ROCKET=ON' ])
-
-        if '+longlong' in spec:
-          options.extend([ '-DPLATOANALYZE_LONG_LONG_ORDINALTYPE=ON' ])
 
 
         return options
