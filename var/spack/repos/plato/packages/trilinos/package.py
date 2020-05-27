@@ -62,7 +62,7 @@ class Trilinos(CMakePackage):
     # Build options
     variant('complex', default=False,
             description='Enable complex numbers in Trilinos')
-    variant('cuda',         default=True,
+    variant('cuda',         default=False,
             description='Enable Cuda')
     variant('explicit_template_instantiation',  default=True,
             description='Enable explicit template instantiation (ETI)')
