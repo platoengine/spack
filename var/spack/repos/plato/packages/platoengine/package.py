@@ -37,6 +37,7 @@ class Platoengine(CMakePackage):
     variant( 'cuda',           default=False,   description='Compile with cuda'         )
     variant( 'albany_tests',   default=False,   description='Configure Albany tests'    )
     variant( 'analyze_tests',  default=False,   description='Configure Analyze tests'   )
+    variant( 'tpetra_tests',   default=False,   description='Configure Tpetra tests'    )
 
     conflicts( '+expy', when='-platomain')
     conflicts( '+iso',  when='-stk')
@@ -119,6 +120,9 @@ class Platoengine(CMakePackage):
         if '+analyze_tests' in spec:
           options.extend([ '-DANALYZE=ON' ])
           options.extend([ '-DANALYZE_BINARY=analyze_MPMD' ])
+
+        if '+tpetra_tests' in spec:
+          options.extend([ '-DPLATO_TPETRA=ON' ])
 
         return options
 

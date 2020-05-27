@@ -48,7 +48,7 @@ class Platoanalyze(CMakePackage):
 
     depends_on('trilinos+epetra')
     depends_on('trilinos+cuda',                             when='+cuda')
-    depends_on('trilinos+tpetra+belos+ifpack2+amesos2+superlu',           when='+tpetra')
+    depends_on('trilinos+tpetra+belos+ifpack2+amesos2+superlu+muelu',     when='+tpetra')
     depends_on('cmake@3.0.0:', type='build')
     depends_on('python@2.6:2.999',                          when='+python')
     depends_on('platoengine+analyze_tests',                 when='+mpmd'  )
