@@ -5,7 +5,7 @@ class Esp(Package):
     """Engineering SketchPad by Bob Haimes at MIT"""
 
     homepage = "https://acdl.mit.edu/ESP/"
-    url      = "https://acdl.mit.edu/ESP/PreBuilts/ESP117Lin.tgz"
+    url      = "https://acdl.mit.edu/ESP/archive/ESP117Lin.tgz"
 
     version('117Lin', sha256='bd6418ee9dafabdc17c58449c379535f4f148f1f67730074297c605b5e10e1a0')
 
