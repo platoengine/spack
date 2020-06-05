@@ -40,6 +40,7 @@ class Platoanalyze(CMakePackage):
     variant( 'mpmd',       default=True,     description='Compile with mpmd'            )
     variant( 'meshmap',    default=True,     description='Compile with MeshMap'         )
     variant( 'amgx',       default=True,     description='Compile with AMGX'            )
+    variant( 'openmp',     default=False,    description='Compile with openmp'          )
     variant( 'python',     default=False,    description='Compile with python'          )
     variant( 'geometry',   default=False,    description='Compile with MLS geometry'    )
     variant( 'rocket',     default=False,    description='Builds ROCKET and ROCKET_MPMD')
@@ -48,6 +49,7 @@ class Platoanalyze(CMakePackage):
 
     depends_on('trilinos+epetra')
     depends_on('trilinos+cuda',                             when='+cuda')
+    depends_on('trilinos+openmp',                           when='+openmp')
     depends_on('trilinos+tpetra+belos+ifpack2+amesos2+superlu+muelu',     when='+tpetra')
     depends_on('cmake@3.0.0:', type='build')
     depends_on('python@2.6:2.999',                          when='+python')
