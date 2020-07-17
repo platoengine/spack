@@ -13,7 +13,7 @@ class Platoengine(CMakePackage):
     url      = "https://github.com/platoengine/platoengine/archive/v0.6.0.tar.gz"
     git      = "https://github.com/platoengine/platoengine.git"
 
-    maintainers = ['rvierte@sandia.gov', 'jrobbin@sandia.gov']
+    maintainers = ['rviertel', 'jrobbin']
 
     version('master', branch='master', preferred=True)
     version('0.6.0', sha256='893f9d6f05ef1d7ca563fcc585e92b2153eb6b9f203fb4cadc73a00da974ac20')

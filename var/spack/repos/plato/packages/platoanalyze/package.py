@@ -32,7 +32,7 @@ class Platoanalyze(CMakePackage):
     url      = "https://github.com/platoengine/platoanalyze"
     git      = "https://github.com/platoengine/platoanalyze.git"
 
-    maintainers = ['rvierte@sandia.gov', 'jrobbin@sandia.gov']
+    maintainers = ['rviertel', 'jrobbin']
 
     version('master', branch='master', submodules=True)
 
