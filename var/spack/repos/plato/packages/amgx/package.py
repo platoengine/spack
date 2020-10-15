@@ -32,7 +32,7 @@ class Amgx(CMakePackage):
     url      = "https://github.com/nvidia/amgx"
     git      = "https://github.com/nvidia/amgx.git"
 
-    version('release', branch='release')
+    version('master', branch='master')
 
     variant('shared_libs',        default=True, description='Compile shared libraries')
 
