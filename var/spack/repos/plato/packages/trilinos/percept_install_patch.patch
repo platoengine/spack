@@ -1,0 +1,59 @@
+--- a/packages/percept/CMakeLists.txt
++++ b/packages/percept/CMakeLists.txt
+@@ -104,6 +104,7 @@ FILE (GLOB HEADER
+ 
+      src/percept/element/intrepid/*.hpp
+ 
++     src/percept/math/*.hpp
+      src/percept/fixtures/*.hpp
+      src/percept/function/*.hpp
+      src/percept/function/internal/*.hpp
+@@ -134,6 +135,48 @@ TRIBITS_ADD_LIBRARY(
+   SOURCES ${SOURCE}
+   )
+ 
++SET(HEADER_SUBDIRS 
++     adapt
++     adapt/sierra_element
++     adapt/markers
++
++     percept
++
++     percept/element/intrepid
++
++     percept/math
++     percept/fixtures
++     percept/function
++     percept/function/internal
++
++     percept/mesh/gen
++     percept/mesh/geometry/kernel
++     percept/mesh/geometry/kernel/xfer
++     percept/mesh/geometry/recovery
++     percept/mesh/geometry/stk_geom
++     percept/mesh/geometry/stk_geom/3D
++     percept/mesh/geometry/volume
++     percept/mesh/geometry/volume/sierra_only
++     percept/mesh/mod/smoother
++
++     percept/norm
++
++     percept/stk_rebalance
++     percept/stk_rebalance_utils
++     percept/structured
++     percept/util
++     percept/xfer
++    )
++
++FOREACH(SUBDIR ${HEADER_SUBDIRS})
++    FILE (GLOB HEADERS_TMP src/${SUBDIR}/*.hpp)
++    MESSAGE("Install Percept:" ${SUBDIR})
++    TRIBITS_INSTALL_HEADERS(
++        HEADERS ${HEADERS_TMP}
++        INSTALL_SUBDIR ${SUBDIR}
++        )
++ENDFOREACH()
++
+ TRIBITS_ADD_EXECUTABLE(
+   perceptX
+   NOEXEPREFIX

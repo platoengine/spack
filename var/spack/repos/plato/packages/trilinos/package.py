@@ -79,6 +79,7 @@ class Trilinos(CMakePackage):
     variant('xsdkflags',    default=False,
             description='Compile using the default xSDK configuration')
 
+
     # TPLs (alphabet order)
     variant('boost',        default=False,
             description='Compile with Boost')
@@ -157,6 +158,8 @@ class Trilinos(CMakePackage):
             description='Compile with NOX')
     variant('pamgen',       default=False,
             description='Compile with Pamgen')
+    variant('percept',      default=False,
+            description='Compile with percept')
     variant('piro',         default=False,
             description='Compile with Piro')
     variant('phalanx',      default=False,
@@ -352,10 +355,12 @@ class Trilinos(CMakePackage):
     patch('xlf_tpetra.patch', when='@12.12.1%xl')
     patch('xlf_tpetra.patch', when='@12.12.1%xl_r')
     patch('xlf_tpetra.patch', when='@12.12.1%clang')
+    patch('percept_install_patch.patch')
 
     def url_for_version(self, version):
         url = "https://github.com/trilinos/Trilinos/archive/trilinos-release-{0}.tar.gz"
         return url.format(version.dashed)
+
 
     def cmake_args(self):
         spec = self.spec
@@ -443,6 +448,8 @@ class Trilinos(CMakePackage):
                 'ON' if '+nox' in spec else 'OFF'),
             '-DTrilinos_ENABLE_Pamgen:BOOL=%s' % (
                 'ON' if '+pamgen' in spec else 'OFF'),
+            '-DTrilinos_ENABLE_Percept:BOOL=%s' % (
+                'ON' if '+percept' in spec else 'OFF'),
             '-DTrilinos_ENABLE_Piro:BOOL=%s' % (
                 'ON' if '+piro' in spec else 'OFF'),
             '-DTrilinos_ENABLE_Phalanx=%s' % (
