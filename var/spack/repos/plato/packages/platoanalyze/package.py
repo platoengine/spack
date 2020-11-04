@@ -57,6 +57,8 @@ class Platoanalyze(CMakePackage):
     depends_on('platoengine+analyze_tests',                 when='+mpmd'  )
     depends_on('platoengine+geometry',                      when='+geometry')
     depends_on('platoengine~geometry',                      when='~geometry')
+    depends_on('platoengine@develop',                       when='@develop' )
+    depends_on('platoengine@release',                       when='@release' )
     depends_on('arborx~mpi~cuda~serial @header_only',       when='+meshmap')
     depends_on('platoengine+esp',                           when='+mpmd+esp')
     depends_on('amgx',                                      when='+amgx')
