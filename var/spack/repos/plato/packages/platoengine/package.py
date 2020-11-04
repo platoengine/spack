@@ -44,6 +44,13 @@ class Platoengine(CMakePackage):
     conflicts( '+expy', when='-platomain')
     conflicts( '+iso',  when='-stk')
     conflicts( '+prune',  when='-stk')
+    conflicts( '@release', when='+prune')
+    conflicts( '@0.1.0', when='+prune')
+    conflicts( '@0.2.0', when='+prune')
+    conflicts( '@0.3.0', when='+prune')
+    conflicts( '@0.4.0', when='+prune')
+    conflicts( '@0.5.0', when='+prune')
+    conflicts( '@0.6.0', when='+prune')
 
     depends_on( 'trilinos')
     depends_on( 'mpi',            type=('build','link','run'))
@@ -59,6 +66,7 @@ class Platoengine(CMakePackage):
     depends_on( 'py-numpy@1.16.5',                            when='+expy'         )
     depends_on( 'nvccwrapper',                                when='+cuda')
     depends_on( 'trilinos+cuda',                              when='+cuda')
+    depends_on( 'trilinos+percept',                           when='+prune')
 
     depends_on( 'esp', when='+esp')
 
@@ -76,6 +84,7 @@ class Platoengine(CMakePackage):
           options.extend([ '-DPLATOMAIN=ON' ])
 
         if '+platoproxy' in spec:
+
           options.extend([ '-DPLATOPROXY=ON' ])
 
         if '+platostatics' in spec:
