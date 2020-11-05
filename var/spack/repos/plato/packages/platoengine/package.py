@@ -58,6 +58,8 @@ class Platoengine(CMakePackage):
     depends_on( 'trilinos+rol',                               when='+rol')
     depends_on( 'trilinos+zlib+pnetcdf+boost \
                                        +stk+gtest',           when='+stk')
+    depends_on( 'trilinos+percept+zoltan+zlib+pnetcdf+boost \
+                                       +stk+gtest',           when='+prune')
     depends_on( 'trilinos+zlib+pnetcdf+boost+intrepid2 \
                              +minitensor+pamgen',             when='+geometry')
     depends_on( 'googletest',                                 when='+unit_testing' )
@@ -66,7 +68,6 @@ class Platoengine(CMakePackage):
     depends_on( 'py-numpy@1.16.5',                            when='+expy'         )
     depends_on( 'nvccwrapper',                                when='+cuda')
     depends_on( 'trilinos+cuda',                              when='+cuda')
-    depends_on( 'trilinos+percept',                           when='+prune')
 
     depends_on( 'esp', when='+esp')
 
