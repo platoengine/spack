@@ -28,7 +28,7 @@ class NvccWrapper(CMakePackage):
     homepage = "https://github.com/platoengine"
     git      = "https://github.com/platoengine/nvcc_wrapper.git"
 
-    version('master', branch='master')
+    version('release', branch='release')
 
     variant('compute_capability', default='70', description="GPU compute capability",
         values=('30', '35', '37', '50', '52', '60', '61', '70', '75'))
