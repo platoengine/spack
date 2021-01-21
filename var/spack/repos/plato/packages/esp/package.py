@@ -9,6 +9,8 @@ class Esp(Package):
 
     version('117Lin', sha256='bd6418ee9dafabdc17c58449c379535f4f148f1f67730074297c605b5e10e1a0')
 
+    depends_on( 'python@2.6:2.999', type=('run') )
+
     phases = ['install']
 
 

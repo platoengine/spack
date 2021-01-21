@@ -50,14 +50,13 @@ class Platoengine(CMakePackage):
     depends_on( 'trilinos+zlib+pnetcdf+boost+intrepid2 \
                              +minitensor+pamgen',             when='+geometry')
     depends_on( 'googletest',                                 when='+unit_testing' )
-    depends_on( 'python@2.6:2.999',                           when='+expy'         )
+    depends_on( 'python@2.6:2.999', type=('build', 'link', 'run'), when='+expy'    )
     depends_on( 'nlopt',                                      when='+expy'         )
     depends_on( 'py-numpy@1.16.5',                            when='+expy'         )
     depends_on( 'nvccwrapper',                                when='+cuda')
     depends_on( 'trilinos+cuda',                              when='+cuda')
 
     depends_on( 'esp', when='+esp')
-
 
     def cmake_args(self):
         spec = self.spec
@@ -128,3 +127,4 @@ class Platoengine(CMakePackage):
         if '+expy' in self.spec:
           run_env.prepend_path('PYTHONPATH', self.prefix.lib)
           run_env.prepend_path('PYTHONPATH', self.prefix.etc)
+          run_env.prepend_path('PATH', self.prefix.etc)
