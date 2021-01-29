@@ -76,6 +76,11 @@ class Platoengine(CMakePackage):
 
         options = []
 
+        options.extend([
+          '-DMPI_C_COMPILER=%s'       % spec['mpi'].mpicc,
+          '-DMPI_CXX_COMPILER=%s'     % spec['mpi'].mpicxx
+        ])
+
         trilinos_dir = spec['trilinos'].prefix
         options.extend([ '-DSEACAS_PATH:FILEPATH={0}'.format(trilinos_dir) ])
         options.extend([ '-DTRILINOS_INSTALL_DIR:FILEPATH={0}'.format(trilinos_dir) ])
